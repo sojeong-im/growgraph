@@ -1,0 +1,142 @@
+import { useState } from 'react'
+
+export default function Contact() {
+    const [selectedKeywords, setSelectedKeywords] = useState([])
+    const [agreed, setAgreed] = useState(false)
+
+    const keywords = ['우아함', '도시적', '미니멀', '러블리', '내추럴', '중성적', '화려함', '클래식']
+
+    const toggleKeyword = (keyword) => {
+        setSelectedKeywords(prev =>
+            prev.includes(keyword)
+                ? prev.filter(k => k !== keyword)
+                : [...prev, keyword]
+        )
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (!agreed) {
+            alert('개인정보 수집 및 이용에 동의해주세요.')
+            return
+        }
+        alert('신청이 완료되었습니다. 곧 연락드리겠습니다.')
+    }
+
+    return (
+        <div className="bg-white min-h-screen">
+            {/* Header */}
+            <section className="pt-32 pb-16 px-6">
+                <div className="max-w-2xl mx-auto text-center">
+                    <p className="text-caption uppercase text-gray-400 mb-4">Contact</p>
+                    <h1 className="font-serif text-headline font-light mb-4">신청하기</h1>
+                    <p className="text-gray-500 keep-all">
+                        당신만의 고유한 바이브를 찾기 위한 첫 번째 단계입니다.
+                    </p>
+                </div>
+            </section>
+
+            {/* Form */}
+            <section className="max-w-xl mx-auto px-6 pb-24">
+                <form onSubmit={handleSubmit} className="space-y-10">
+                    {/* Service Type */}
+                    <div>
+                        <label className="block text-caption uppercase text-gray-400 mb-3">Service</label>
+                        <select className="w-full p-4 border border-gray-200 bg-white text-black focus:outline-none focus:border-black transition-colors">
+                            <option>HAIR PROFILE</option>
+                            <option>MAKEUP PROFILE</option>
+                            <option>FASHION PROFILE</option>
+                            <option>ALL-IN-ONE PACKAGE</option>
+                        </select>
+                    </div>
+
+                    {/* Name */}
+                    <div>
+                        <label className="block text-caption uppercase text-gray-400 mb-3">Name / Contact</label>
+                        <input
+                            type="text"
+                            placeholder="성함과 연락처를 입력해주세요"
+                            className="w-full p-4 border border-gray-200 focus:outline-none focus:border-black transition-colors placeholder:text-gray-300"
+                        />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                        <label className="block text-caption uppercase text-gray-400 mb-3">Email</label>
+                        <input
+                            type="email"
+                            placeholder="결과지를 받으실 이메일 주소"
+                            className="w-full p-4 border border-gray-200 focus:outline-none focus:border-black transition-colors placeholder:text-gray-300"
+                        />
+                    </div>
+
+                    {/* Keywords */}
+                    <div>
+                        <label className="block text-caption uppercase text-gray-400 mb-3">지향하는 이미지</label>
+                        <div className="grid grid-cols-4 gap-2">
+                            {keywords.map((keyword) => (
+                                <button
+                                    key={keyword}
+                                    type="button"
+                                    onClick={() => toggleKeyword(keyword)}
+                                    className={`py-3 text-sm border transition-all ${selectedKeywords.includes(keyword)
+                                            ? 'bg-black text-white border-black'
+                                            : 'bg-white text-gray-600 border-gray-200 hover:border-black'
+                                        }`}
+                                >
+                                    {keyword}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Message */}
+                    <div>
+                        <label className="block text-caption uppercase text-gray-400 mb-3">Message</label>
+                        <textarea
+                            rows={4}
+                            placeholder="고민되는 스타일 부분을 자유롭게 적어주세요"
+                            className="w-full p-4 border border-gray-200 focus:outline-none focus:border-black transition-colors placeholder:text-gray-300 resize-none"
+                        />
+                    </div>
+
+                    {/* Privacy */}
+                    <div className="border border-gray-200 p-6">
+                        <p className="text-caption uppercase text-gray-400 mb-4">개인정보 수집 동의</p>
+                        <div className="text-xs text-gray-500 space-y-1 mb-4">
+                            <p>1. 수집 항목: 이름, 연락처, 이메일</p>
+                            <p>2. 수집 목적: 프로파일링 리포트 제공</p>
+                            <p>3. 보유 기간: 서비스 완료 후 6개월</p>
+                        </div>
+                        <label className="flex items-center gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                checked={agreed}
+                                onChange={(e) => setAgreed(e.target.checked)}
+                                className="w-4 h-4 accent-black"
+                            />
+                            <span className="text-sm">동의합니다 (필수)</span>
+                        </label>
+                    </div>
+
+                    {/* Submit */}
+                    <button
+                        type="submit"
+                        className="w-full py-5 bg-black text-white text-sm tracking-[0.15em] uppercase hover:bg-gray-800 transition-all"
+                    >
+                        신청하기
+                    </button>
+                </form>
+
+                {/* Alternative */}
+                <div className="mt-16 text-center">
+                    <div className="editorial-divider mx-auto mb-6" />
+                    <p className="text-sm text-gray-500 mb-2">다른 문의 방법</p>
+                    <a href="mailto:contact@vibe-profile.co.kr" className="text-sm hover-line">
+                        contact@vibe-profile.co.kr
+                    </a>
+                </div>
+            </section>
+        </div>
+    )
+}
