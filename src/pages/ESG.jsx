@@ -15,7 +15,7 @@ function CalendarPicker({ selectedSlots, setSelectedSlots }) {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const monthLabel = `${year}년 ${month + 1}월`;
 
-    const timeSlots = ['10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+    const timeSlots = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
 
     const dateKey = (d) => `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
 
