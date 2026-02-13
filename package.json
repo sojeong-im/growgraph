@@ -1,0 +1,9 @@
+{
+    "name": "growgraph",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "deploy": "npx netlify-cli deploy --prod --dir ."
+    }
+}
