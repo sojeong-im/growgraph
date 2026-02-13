@@ -11,6 +11,16 @@ const Navigation = () => {
     const navigate = useNavigate();
     const navRef = useRef(null);
 
+    // Pages that have dark hero sections — only these get transparent navbar at top
+    const darkHeroPages = ['/', '/b2b/corporate', '/b2b/campus', '/b2b/seminar'];
+    const hasDarkHero = darkHeroPages.includes(location.pathname);
+
+    // Force scrolled (white bg, dark text) when:
+    // - user scrolled past 30px
+    // - dropdown is open (so all items are readable)
+    // - page doesn't have a dark hero background
+    const forceScrolled = scrolled || !!openDropdown || !hasDarkHero;
+
     // Scroll detection
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 30);
@@ -19,7 +29,7 @@ const Navigation = () => {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    // Close mobile menu on route change
+    // Close menus on route change
     useEffect(() => {
         setMobileOpen(false);
         setOpenDropdown(null);
@@ -45,7 +55,6 @@ const Navigation = () => {
         setOpenDropdown(openDropdown === name ? null : name);
     };
 
-    // Check if current path starts with a given prefix
     const isActive = (prefix) => location.pathname.startsWith(prefix);
     const isExact = (path) => location.pathname === path;
 
@@ -87,7 +96,7 @@ const Navigation = () => {
     ];
 
     return (
-        <nav ref={navRef} className={`navbar${scrolled ? ' scrolled' : ''}`}>
+        <nav ref={navRef} className={`navbar${forceScrolled ? ' scrolled' : ''}`}>
             <div className="container navbar-container">
                 {/* Logo */}
                 <Link to="/" className="navbar-logo">
@@ -98,7 +107,7 @@ const Navigation = () => {
                                 <stop offset="1" stopColor="#06b6d4" />
                             </linearGradient>
                         </defs>
-                        <path d="M20 4L34 11.5V28.5L20 36L6 28.5V11.5L20 4Z" stroke="url(#navLogoGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill={scrolled ? '#fff' : '#fff'} opacity="0.95" />
+                        <path d="M20 4L34 11.5V28.5L20 36L6 28.5V11.5L20 4Z" stroke="url(#navLogoGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="#fff" opacity="0.95" />
                         <path d="M11 25L17 21L23 24L30 14" stroke="url(#navLogoGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                         <circle cx="11" cy="25" r="2" fill="#fff" stroke="#2563eb" strokeWidth="1.5" />
                         <circle cx="17" cy="21" r="2" fill="#fff" stroke="#2563eb" strokeWidth="1.5" />
@@ -111,36 +120,40 @@ const Navigation = () => {
                 {/* Desktop Menu */}
                 <div className={`navbar-menu-wrapper${mobileOpen ? ' active' : ''}`}>
                     <ul className="navbar-menu">
-                        {menus.map((menu) => (
-                            <li key={menu.key} className={`nav-item${isActive(`/${menu.key}`) ? ' active' : ''}`}>
-                                <button
-                                    className={`nav-link${isActive(`/${menu.key}`) ? ' active' : ''}`}
-                                    onClick={() => toggleDropdown(menu.key)}
-                                >
-                                    {menu.label}
-                                    <svg className={`chevron-icon${openDropdown === menu.key ? ' rotate-180' : ''}`} width="12" height="12" viewBox="0 0 12 12" fill="none">
-                                        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </button>
-                                <ul className={`dropdown-menu${openDropdown === menu.key ? ' active' : ''}`}>
-                                    {menu.items.map((item) => (
-                                        <li key={item.to} className={isExact(item.to) ? 'active' : ''}>
-                                            <Link to={item.to}>{item.label}</Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </li>
-                        ))}
+                        {menus.map((menu) => {
+                            const itemActive = isActive(`/${menu.key}`);
+                            const dropdownOpen = openDropdown === menu.key;
+                            return (
+                                <li key={menu.key} className={`nav-item${itemActive ? ' active' : ''}`}>
+                                    <button
+                                        className={`nav-link${itemActive ? ' active' : ''}${dropdownOpen ? ' open' : ''}`}
+                                        onClick={() => toggleDropdown(menu.key)}
+                                    >
+                                        {menu.label}
+                                        <svg className={`chevron-icon${dropdownOpen ? ' rotate-180' : ''}`} width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </button>
+                                    <ul className={`dropdown-menu${dropdownOpen ? ' active' : ''}`}>
+                                        {menu.items.map((item) => (
+                                            <li key={item.to} className={isExact(item.to) ? 'active' : ''}>
+                                                <Link to={item.to}>{item.label}</Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
+                            );
+                        })}
 
                         {/* 제휴문의 */}
                         <li className={`nav-item${isExact('/contact') ? ' active' : ''}`}>
                             <Link to="/contact" className={`nav-link${isExact('/contact') ? ' active' : ''}`}>제휴문의</Link>
                         </li>
 
-                        {/* Mobile only: admin + login */}
+                        {/* Mobile only: ESG + login */}
                         <li className="mobile-only">
                             {user && (
-                                <Link to="/admin" className="login-btn" style={{ marginBottom: '0.75rem', display: 'block' }}>관리자</Link>
+                                <Link to="/esg" className="login-btn" style={{ marginBottom: '0.75rem', display: 'block' }}>ESG 경영</Link>
                             )}
                             {user ? (
                                 <button onClick={handleLogout} className="login-btn" style={{ width: '100%' }}>로그아웃</button>
@@ -154,7 +167,7 @@ const Navigation = () => {
                 {/* Desktop Right */}
                 <div className="navbar-right-desktop">
                     {user && (
-                        <Link to="/admin" className="admin-btn">관리자</Link>
+                        <Link to="/esg" className="admin-btn">ESG 경영</Link>
                     )}
                     {user ? (
                         <button onClick={handleLogout} className="login-btn">로그아웃</button>

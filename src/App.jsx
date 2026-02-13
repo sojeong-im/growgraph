@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -30,7 +30,6 @@ import Contact from './pages/Contact';
 // Auth & Protected pages
 import Login from './pages/auth/Login';
 import ESG from './pages/ESG';
-import Admin from './pages/Admin';
 
 function App() {
     return (
@@ -68,11 +67,7 @@ function App() {
                             <Route path="/login" element={<Login />} />
 
                             {/* Protected */}
-                            <Route path="/admin" element={
-                                <ProtectedRoute>
-                                    <Admin />
-                                </ProtectedRoute>
-                            } />
+                            <Route path="/admin" element={<Navigate to="/esg" replace />} />
                             <Route path="/esg" element={
                                 <ProtectedRoute>
                                     <ESG />

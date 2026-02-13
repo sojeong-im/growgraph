@@ -17,7 +17,7 @@ const Login = () => {
 
         try {
             await signIn(username, password);
-            navigate('/admin');
+            navigate('/esg');
         } catch (err) {
             setError('아이디 또는 비밀번호가 올바르지 않습니다.');
         } finally {
