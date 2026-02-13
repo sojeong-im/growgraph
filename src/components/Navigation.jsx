@@ -12,7 +12,7 @@ const Navigation = () => {
     const navRef = useRef(null);
 
     // Pages that have dark hero sections — only these get transparent navbar at top
-    const darkHeroPages = ['/', '/b2b/corporate', '/b2b/campus', '/b2b/seminar'];
+    const darkHeroPages = ['/b2b/corporate', '/b2b/campus', '/b2b/seminar'];
     const hasDarkHero = darkHeroPages.includes(location.pathname);
 
     // Force scrolled (white bg, dark text) when:
