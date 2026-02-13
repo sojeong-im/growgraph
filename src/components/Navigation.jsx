@@ -150,10 +150,13 @@ const Navigation = () => {
                             <Link to="/contact" className={`nav-link${isExact('/contact') ? ' active' : ''}`}>제휴문의</Link>
                         </li>
 
-                        {/* Mobile only: ESG + login */}
+                        {/* Mobile only: admin links + login */}
                         <li className="mobile-only">
                             {user && (
-                                <Link to="/esg" className="login-btn" style={{ marginBottom: '0.75rem', display: 'block' }}>ESG 경영</Link>
+                                <>
+                                    <Link to="/esg" className="login-btn" style={{ marginBottom: '0.5rem', display: 'block' }}>ESG 경영</Link>
+                                    <Link to="/admin" className="login-btn" style={{ marginBottom: '0.75rem', display: 'block' }}>관리자</Link>
+                                </>
                             )}
                             {user ? (
                                 <button onClick={handleLogout} className="login-btn" style={{ width: '100%' }}>로그아웃</button>
@@ -167,7 +170,10 @@ const Navigation = () => {
                 {/* Desktop Right */}
                 <div className="navbar-right-desktop">
                     {user && (
-                        <Link to="/esg" className="admin-btn">ESG 경영</Link>
+                        <>
+                            <Link to="/esg" className="admin-btn">ESG 경영</Link>
+                            <Link to="/admin" className="admin-btn admin-btn-outline">관리자</Link>
+                        </>
                     )}
                     {user ? (
                         <button onClick={handleLogout} className="login-btn">로그아웃</button>

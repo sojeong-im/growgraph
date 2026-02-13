@@ -330,8 +330,8 @@ const Home = () => {
             <section className="cta-section">
                 <div className="container">
                     <h2>당신의 성장을 시작하세요</h2>
-                    <p>지금 바로 온라인 신청을 통해 나만의 로드맵을 받아보세요</p>
-                    <Link to="/program/apply" className="cta-btn">온라인 신청하기 →</Link>
+                    <p>맞춤형 로드맵이 필요하시다면 언제든 문의해 주세요</p>
+                    <Link to="/contact" className="cta-btn">제휴 문의하기 →</Link>
                 </div>
             </section>
         </div>

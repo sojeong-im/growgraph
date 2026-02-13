@@ -211,8 +211,28 @@
   color: var(--color-primary) !important
 }
 
+/* ── Force dark text on ALL nav elements when scrolled ── */
+.navbar.scrolled .nav-link,
+.navbar.scrolled button.nav-link,
+.navbar.scrolled a.nav-link {
+  color: var(--color-text)
+}
+
+.navbar.scrolled .navbar-logo {
+  color: var(--color-secondary)
+}
+
 .navbar.scrolled .nav-item:hover > .nav-link {
   color: var(--color-primary)
+}
+
+.navbar.scrolled .nav-item.active > .nav-link {
+  color: var(--color-primary) !important
+}
+
+.navbar.scrolled .login-btn {
+  color: var(--color-text);
+  border-color: var(--color-text)
 }
 
 /* ── Dropdown active item ── */
@@ -249,6 +269,27 @@
 .admin-btn:hover {
   background-color: #1d4ed8;
   border-color: #1d4ed8
+}
+
+.admin-btn-outline {
+  background-color: transparent;
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary)
+}
+
+.admin-btn-outline:hover {
+  background-color: var(--color-primary);
+  color: #fff !important
+}
+
+.navbar:not(.scrolled) .admin-btn-outline {
+  color: #fff !important;
+  border-color: rgba(255,255,255,.5)
+}
+
+.navbar:not(.scrolled) .admin-btn-outline:hover {
+  background-color: rgba(255,255,255,.15);
+  border-color: #fff
 }
 
 .dropdown-menu {
@@ -303,10 +344,6 @@
   background-color: var(--color-primary);
   border-color: var(--color-primary);
   color: #fff
-}
-
-.navbar.scrolled .login-btn {
-  border-color: var(--color-text)
 }
 
 .navbar.scrolled .login-btn:hover {

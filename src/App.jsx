@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navigation from './components/Navigation';
+import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 
@@ -30,11 +31,13 @@ import Contact from './pages/Contact';
 // Auth & Protected pages
 import Login from './pages/auth/Login';
 import ESG from './pages/ESG';
+import Admin from './pages/Admin';
 
 function App() {
     return (
         <AuthProvider>
             <Router>
+                <ScrollToTop />
                 <div className="app">
                     <Navigation />
                     <main style={{ paddingTop: '80px', minHeight: '100vh' }}>
@@ -48,7 +51,11 @@ function App() {
 
                             {/* Program */}
                             <Route path="/program/info" element={<ProgramInfo />} />
-                            <Route path="/program/apply" element={<ProgramApply />} />
+                            <Route path="/program/apply" element={
+                                <ProtectedRoute>
+                                    <ProgramApply />
+                                </ProtectedRoute>
+                            } />
 
                             {/* B2B */}
                             <Route path="/b2b/corporate" element={<Corporate />} />
@@ -67,7 +74,11 @@ function App() {
                             <Route path="/login" element={<Login />} />
 
                             {/* Protected */}
-                            <Route path="/admin" element={<Navigate to="/esg" replace />} />
+                            <Route path="/admin" element={
+                                <ProtectedRoute>
+                                    <Admin />
+                                </ProtectedRoute>
+                            } />
                             <Route path="/esg" element={
                                 <ProtectedRoute>
                                     <ESG />

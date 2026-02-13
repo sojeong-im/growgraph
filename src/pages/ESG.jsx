@@ -390,9 +390,23 @@ function ApplicationModal({ isOpen, onClose }) {
 }
 
 /* ───── ESG Page ───── */
+const SECURITY_CODE = 'g-614412';
+
 const ESG = () => {
     const { user } = useAuth();
     const [modalOpen, setModalOpen] = useState(false);
+    const [securityInput, setSecurityInput] = useState('');
+    const [securityVerified, setSecurityVerified] = useState(false);
+    const [securityError, setSecurityError] = useState('');
+
+    const handleSecuritySubmit = () => {
+        if (securityInput.trim() === SECURITY_CODE) {
+            setSecurityVerified(true);
+            setSecurityError('');
+        } else {
+            setSecurityError('보안 코드가 올바르지 않습니다.');
+        }
+    };
 
     const esgData = {
         environment: [
@@ -559,31 +573,62 @@ const ESG = () => {
                 </div>
             </section>
 
-            {/* Application CTA */}
+            {/* Application CTA — Security Code Required */}
             <section style={{ padding: '4rem 2rem', textAlign: 'center', backgroundColor: '#f8fafc' }}>
                 <div style={{ maxWidth: '600px', margin: '0 auto' }}>
                     <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>
                         로드맵 프로그램 신청
                     </h2>
                     <p style={{ color: '#64748b', fontSize: '1rem', marginBottom: '2rem', lineHeight: 1.7 }}>
-                        나만의 성장 경로를 설계하세요.<br />온라인 신청 후 담당 코치가 24시간 이내에 연락드립니다.
+                        나만의 성장 경로를 설계하세요.<br />보안 코드를 입력하시면 온라인 신청서를 이용하실 수 있습니다.
                     </p>
-                    <button
-                        onClick={() => setModalOpen(true)}
-                        style={{
-                            padding: '1.1rem 3rem',
-                            backgroundColor: '#2563eb',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '0.75rem',
-                            fontWeight: 700,
-                            fontSize: '1.125rem',
-                            cursor: 'pointer',
-                            boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
-                        }}
-                    >
-                        온라인 신청하기
-                    </button>
+
+                    {!securityVerified ? (
+                        <div style={{ maxWidth: '360px', margin: '0 auto' }}>
+                            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                                <input
+                                    type="text"
+                                    value={securityInput}
+                                    onChange={(e) => { setSecurityInput(e.target.value); setSecurityError(''); }}
+                                    onKeyDown={(e) => e.key === 'Enter' && handleSecuritySubmit()}
+                                    placeholder="보안 코드를 입력하세요"
+                                    style={{
+                                        flex: 1, padding: '0.85rem 1rem', borderRadius: '0.75rem',
+                                        border: securityError ? '1px solid #ef4444' : '1px solid #cbd5e1',
+                                        fontSize: '1rem', outline: 'none', backgroundColor: '#fff', boxSizing: 'border-box'
+                                    }}
+                                />
+                                <button
+                                    onClick={handleSecuritySubmit}
+                                    style={{
+                                        padding: '0.85rem 1.5rem', backgroundColor: '#0f172a', color: '#fff',
+                                        border: 'none', borderRadius: '0.75rem', fontWeight: 700,
+                                        fontSize: '0.95rem', cursor: 'pointer', whiteSpace: 'nowrap'
+                                    }}
+                                >확인</button>
+                            </div>
+                            {securityError && (
+                                <p style={{ color: '#ef4444', fontSize: '0.8rem', fontWeight: 500 }}>{securityError}</p>
+                            )}
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => setModalOpen(true)}
+                            style={{
+                                padding: '1.1rem 3rem',
+                                backgroundColor: '#2563eb',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '0.75rem',
+                                fontWeight: 700,
+                                fontSize: '1.125rem',
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
+                            }}
+                        >
+                            온라인 신청하기
+                        </button>
+                    )}
                 </div>
             </section>
 
