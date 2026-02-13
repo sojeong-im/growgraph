@@ -1,88 +1,122 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { noticesData } from '../../data/notices';
 
-const NoticeList = () => {
-    // 그로우그래프 브랜드 컨셉에 맞춘 임시 공지사항 데이터
-    const notices = [
-        { id: 20, type: '공지', title: '그로우그래프 홈페이지 리뉴얼 및 로드맵 예약 시스템 개편 안내', status: '중요', author: '그로우그래프', date: '2025.11.11', views: 112 },
-        { id: 19, type: '공지', title: "'데이터로 증명하는 리더의 성장 궤적' 공개 세미나 신청 오픈", status: '예정', author: '그로우그래프', date: '2025.11.09', views: 756 },
-        { id: 18, type: '공지', title: "'구조적 로드맵이 만드는 조직의 변화' 하반기 컨설팅 사전 안내", status: '사전 안내', author: '그로우그래프', date: '2025.08.05', views: 892 },
-        { id: 17, type: '공지', title: "'그로우그래프' 참여 후기 이벤트: 나의 성장 그래프 공유하고 굿즈 받기", status: '이벤트', author: '그로우그래프', date: '2025.06.07', views: 980 },
-        { id: 16, type: '공지', title: '청년 성장 서포터즈 2기 최종 합격자 발표 및 오리엔테이션 안내', status: '발표', author: '그로우그래프', date: '2025.05.18', views: 980 },
-        { id: 15, type: '일반', title: '프로그램 예약 취소 및 변경 규정 개정 안내 (2026.02.01 시행)', status: '', author: '그로우그래프', date: '2025.12.15', views: 1892 },
-        { id: 14, type: '일반', title: '주요 IT 기업과 ‘데이터 기반 인재 육성’ 파트너십 체결 소식', status: '', author: '그로우그래프', date: '2025.10.30', views: 1987 },
-        { id: 13, type: '일반', title: '취약계층 청년 대상 무상 로드맵 설계 지원 (그로우그래프 나눔주간)', status: '', author: '그로우그래프', date: '2025.09.20', views: 1543 },
-        { id: 12, type: '일반', title: "'몰입하는 조직, 지표로 확인하는 성과' 기업 담당자 세미나 현장 스케치", status: '', author: '그로우그래프', date: '2025.04.05', views: 1340 },
-        { id: 11, type: '일반', title: '스타트업 연합과 취업 준비생을 위한 ‘실전 커리어 로드맵’ 공동 운영', status: '', author: '그로우그래프', date: '2025.02.25', views: 1420 },
-    ];
+const Notice = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedNotice, setSelectedNotice] = useState(null);
+    const itemsPerPage = 10;
+
+    const filtered = searchTerm
+        ? noticesData.filter(n => n.title.includes(searchTerm) || (n.content && n.content.includes(searchTerm)))
+        : noticesData;
+
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const currentItems = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    const getStatusStyle = (status) => {
+        if (status === '중요') return { background: '#fee2e2', color: '#dc2626' };
+        if (status === '이벤트') return { background: '#fce7f3', color: '#db2777' };
+        if (status === '예정') return { background: '#f1f5f9', color: '#64748b' };
+        return { background: '#f1f5f9', color: '#64748b' };
+    };
 
     return (
-        <div className="bg-white min-h-screen py-16 px-4">
-            <div className="max-w-6xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl font-black text-slate-900 mb-4">공지사항</h1>
-                    <p className="text-slate-500 font-medium tracking-tight">그로우그래프(GrowGraph)의 새로운 소식을 확인하세요</p>
+        <div style={{ background: '#fff', minHeight: '100vh', padding: '6rem 1rem' }}>
+            <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
+                <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>공지사항</h1>
+                    <p style={{ color: '#64748b', fontWeight: 500, fontSize: '1rem' }}>그로우그래프(GrowGraph)의 새로운 소식을 확인하세요</p>
                 </div>
 
-                {/* Search Bar */}
-                <div className="max-w-4xl mx-auto flex gap-2 mb-10">
-                    <input
-                        type="text"
-                        placeholder="제목 또는 내용으로 검색..."
-                        className="flex-1 px-4 py-3 border border-slate-200 rounded-lg outline-none focus:border-blue-500 transition-all"
-                    />
-                    <button className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all">검색</button>
+                <div style={{ maxWidth: '48rem', margin: '0 auto 2.5rem', display: 'flex', gap: '0.5rem' }}>
+                    <input type="text" placeholder="제목 또는 내용으로 검색..." value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
+                        style={{ flex: 1, padding: '0.75rem 1rem', border: '1px solid #e2e8f0', borderRadius: '0.5rem', outline: 'none' }} />
+                    <button style={{ padding: '0.75rem 2rem', background: '#2563eb', color: '#fff', fontWeight: 700, borderRadius: '0.5rem', border: 'none', cursor: 'pointer' }}>검색</button>
                 </div>
 
-                {/* Table List */}
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                <div style={{ overflowX: 'auto', marginBottom: '3rem' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                         <thead>
-                            <tr className="border-y border-slate-100 bg-slate-50 text-slate-400 text-sm font-semibold">
-                                <th className="px-6 py-4 w-20 text-center">번호</th>
-                                <th className="px-6 py-4">제목</th>
-                                <th className="px-6 py-4 w-32 text-center">작성자</th>
-                                <th className="px-6 py-4 w-32 text-center">작성일</th>
-                                <th className="px-6 py-4 w-20 text-center">조회</th>
+                            <tr style={{ borderTop: '1px solid #f1f5f9', borderBottom: '1px solid #f1f5f9', background: '#f8fafc', color: '#94a3b8', fontSize: '0.875rem', fontWeight: 600 }}>
+                                <th style={{ padding: '1rem 1.5rem', textAlign: 'center', width: '5rem' }}>번호</th>
+                                <th style={{ padding: '1rem 1.5rem' }}>제목</th>
+                                <th style={{ padding: '1rem 1.5rem', textAlign: 'center', width: '8rem' }}>작성자</th>
+                                <th style={{ padding: '1rem 1.5rem', textAlign: 'center', width: '8rem' }}>작성일</th>
+                                <th style={{ padding: '1rem 1.5rem', textAlign: 'center', width: '6rem' }}>조회</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {notices.map((n) => (
-                                <tr key={n.id} className={`border-b border-slate-50 hover:bg-slate-50/50 transition-all cursor-pointer ${n.type === '공지' ? 'bg-orange-50/30' : ''}`}>
-                                    <td className="px-6 py-5 text-center text-sm font-medium text-slate-400">
-                                        {n.type === '공지' ? <span className="bg-orange-500 text-white px-3 py-1 rounded text-xs">공지</span> : n.id}
+                        <tbody style={{ fontSize: '0.925rem', color: '#334155' }}>
+                            {currentItems.map(n => (
+                                <tr key={n.id} onClick={() => setSelectedNotice(n)} style={{ borderBottom: '1px solid #f8fafc', cursor: 'pointer', backgroundColor: n.type === '공지' ? '#fff7ed' : '#fff' }}>
+                                    <td style={{ padding: '1.25rem 1.5rem', textAlign: 'center' }}>
+                                        {n.type === '공지' ? (
+                                            <span style={{ background: '#f97316', color: '#fff', fontSize: '0.75rem', fontWeight: 700, padding: '0.125rem 0.375rem', borderRadius: '0.25rem' }}>공지</span>
+                                        ) : (
+                                            <span style={{ fontWeight: 500, color: '#94a3b8' }}>{n.id}</span>
+                                        )}
                                     </td>
-                                    <td className="px-6 py-5">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-slate-800 font-bold hover:text-blue-600">{n.title}</span>
+                                    <td style={{ padding: '1.25rem 1.5rem' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <span style={{ fontWeight: n.type === '공지' ? 700 : 500, color: '#1e293b' }}>{n.title}</span>
                                             {n.status && (
-                                                <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${n.status === '중요' ? 'bg-red-100 text-red-600' :
-                                                    n.status === '이벤트' ? 'bg-pink-100 text-pink-600' : 'bg-slate-100 text-slate-500'
-                                                    }`}>
-                                                    {n.status}
-                                                </span>
+                                                <span style={{ ...getStatusStyle(n.status), fontSize: '0.625rem', fontWeight: 700, padding: '0.125rem 0.375rem', borderRadius: '0.25rem', marginLeft: '0.5rem' }}>{n.status}</span>
                                             )}
                                         </div>
                                     </td>
-                                    <td className="px-6 py-5 text-center text-sm text-slate-500">{n.author}</td>
-                                    <td className="px-6 py-5 text-center text-sm text-slate-400">{n.date}</td>
-                                    <td className="px-6 py-5 text-center text-sm text-slate-300">{n.views}</td>
+                                    <td style={{ padding: '1.25rem 1.5rem', textAlign: 'center', color: '#64748b' }}>{n.author}</td>
+                                    <td style={{ padding: '1.25rem 1.5rem', textAlign: 'center', color: '#94a3b8' }}>{n.date}</td>
+                                    <td style={{ padding: '1.25rem 1.5rem', textAlign: 'center', color: '#cbd5e1' }}>{n.views}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
 
-                {/* Pagination (임시) */}
-                <div className="flex justify-center gap-2 mt-12">
-                    <button className="px-4 py-2 border border-slate-200 rounded text-slate-400 hover:bg-slate-50">이전</button>
-                    <button className="px-4 py-2 bg-blue-600 text-white rounded font-bold">1</button>
-                    <button className="px-4 py-2 border border-slate-200 rounded text-slate-400 hover:bg-slate-50">2</button>
-                    <button className="px-4 py-2 border border-slate-200 rounded text-slate-400 hover:bg-slate-50">다음</button>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                    <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} style={{ padding: '0.5rem 1rem', border: '1px solid #e2e8f0', background: '#fff', color: '#94a3b8', borderRadius: '0.25rem', cursor: 'pointer' }}>이전</button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+                        <button key={p} onClick={() => setCurrentPage(p)} style={{ padding: '0.5rem 1rem', background: currentPage === p ? '#2563eb' : '#fff', color: currentPage === p ? '#fff' : '#94a3b8', border: currentPage === p ? 'none' : '1px solid #e2e8f0', borderRadius: '0.25rem', fontWeight: currentPage === p ? 700 : 400, cursor: 'pointer' }}>{p}</button>
+                    ))}
+                    <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} style={{ padding: '0.5rem 1rem', border: '1px solid #e2e8f0', background: '#fff', color: '#94a3b8', borderRadius: '0.25rem', cursor: 'pointer' }}>다음</button>
                 </div>
             </div>
+
+            {/* Notice Modal */}
+            {selectedNotice && (
+                <div onClick={(e) => { if (e.target === e.currentTarget) setSelectedNotice(null); }} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.8)', zIndex: 9999, backdropFilter: 'blur(4px)', overflowY: 'auto' }}>
+                    <div style={{ minHeight: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem' }}>
+                        <div style={{ background: '#fff', width: '100%', maxWidth: '56rem', borderRadius: '1rem', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', overflow: 'hidden', position: 'relative' }}>
+                            <button onClick={() => setSelectedNotice(null)} style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', background: 'transparent', border: 'none', color: '#64748b', fontSize: '1.5rem', cursor: 'pointer', padding: '0.5rem', lineHeight: 1 }}>✕</button>
+                            <div style={{ padding: '3rem' }}>
+                                <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: '1px solid #e2e8f0' }}>
+                                    <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                                        <span style={{ background: '#f97316', color: '#fff', fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.5rem', borderRadius: '0.25rem' }}>{selectedNotice.type}</span>
+                                        {selectedNotice.status && (
+                                            <span style={{ ...getStatusStyle(selectedNotice.status), fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.5rem', borderRadius: '0.25rem' }}>{selectedNotice.status}</span>
+                                        )}
+                                    </div>
+                                    <h2 style={{ fontSize: '1.875rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.3, marginBottom: '1.5rem', wordBreak: 'keep-all' }}>{selectedNotice.title}</h2>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#64748b', fontSize: '0.875rem' }}>
+                                        <div>
+                                            <span style={{ fontWeight: 600, color: '#0f172a', marginRight: '0.5rem' }}>작성자</span> <span>{selectedNotice.author}</span>
+                                            <span style={{ margin: '0 1rem', color: '#cbd5e1' }}>|</span>
+                                            <span style={{ fontWeight: 600, color: '#0f172a', marginRight: '0.5rem' }}>작성일</span> <span>{selectedNotice.date}</span>
+                                        </div>
+                                        <div><span style={{ marginRight: '0.5rem' }}>조회수</span> <span>{selectedNotice.views}</span></div>
+                                    </div>
+                                </div>
+                                <div style={{ color: '#334155', lineHeight: 1.8, fontSize: '1rem', minHeight: '200px', whiteSpace: 'pre-wrap' }}>{selectedNotice.content || '내용이 없습니다.'}</div>
+                                <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid #e2e8f0', textAlign: 'center' }}>
+                                    <button onClick={() => setSelectedNotice(null)} style={{ background: '#0f172a', color: '#fff', fontWeight: 700, padding: '1rem 3rem', borderRadius: '0.5rem', border: 'none', cursor: 'pointer' }}>목록으로 돌아가기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default NoticeList;
+export default Notice;

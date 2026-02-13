@@ -1,219 +1,175 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Navigation = () => {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const { user, signOut } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const navRef = useRef(null);
 
-    const toggleDropdown = (menu) => {
-        setOpenDropdown(openDropdown === menu ? null : menu);
-    };
+    // Scroll detection
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 30);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
-    const closeMenu = () => {
-        setMobileMenuOpen(false);
+    // Close mobile menu on route change
+    useEffect(() => {
+        setMobileOpen(false);
         setOpenDropdown(null);
+    }, [location.pathname]);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClick = (e) => {
+            if (navRef.current && !navRef.current.contains(e.target)) {
+                setOpenDropdown(null);
+            }
+        };
+        document.addEventListener('click', handleClick);
+        return () => document.removeEventListener('click', handleClick);
+    }, []);
+
+    const handleLogout = async () => {
+        await signOut();
+        navigate('/');
     };
+
+    const toggleDropdown = (name) => {
+        setOpenDropdown(openDropdown === name ? null : name);
+    };
+
+    // Check if current path starts with a given prefix
+    const isActive = (prefix) => location.pathname.startsWith(prefix);
+    const isExact = (path) => location.pathname === path;
+
+    const menus = [
+        {
+            key: 'intro',
+            label: '소개',
+            items: [
+                { to: '/intro/story', label: '그로우그래프 스토리' },
+                { to: '/intro/philosophy', label: '기업이념' },
+                { to: '/intro/space', label: '그로우그래프 공간' },
+            ],
+        },
+        {
+            key: 'program',
+            label: '프로그램',
+            items: [
+                { to: '/program/info', label: '프로그램 안내' },
+            ],
+        },
+        {
+            key: 'b2b',
+            label: '기업용',
+            items: [
+                { to: '/b2b/corporate', label: '기업 코칭' },
+                { to: '/b2b/campus', label: '교육기관' },
+                { to: '/b2b/seminar', label: '강연 및 세미나' },
+            ],
+        },
+        {
+            key: 'community',
+            label: '커뮤니티',
+            items: [
+                { to: '/community/notice', label: '공지사항' },
+                { to: '/community/faq', label: '자주하는 질문' },
+                { to: '/community/diagnostic', label: '자가진단' },
+            ],
+        },
+    ];
 
     return (
-        <nav className="navbar" style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: 'white',
-            borderBottom: '1px solid #e2e8f0',
-            zIndex: 1000,
-            padding: '1rem 2rem'
-        }}>
-            <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <nav ref={navRef} className={`navbar${scrolled ? ' scrolled' : ''}`}>
+            <div className="container navbar-container">
                 {/* Logo */}
-                <Link to="/" onClick={closeMenu} style={{ textDecoration: 'none' }}>
-                    <img src="/logo.png" alt="GrowGraph" style={{ height: '40px' }} />
+                <Link to="/" className="navbar-logo">
+                    <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="navLogoGrad" x1="5" y1="35" x2="35" y2="5" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#2563eb" />
+                                <stop offset="1" stopColor="#06b6d4" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M20 4L34 11.5V28.5L20 36L6 28.5V11.5L20 4Z" stroke="url(#navLogoGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill={scrolled ? '#fff' : '#fff'} opacity="0.95" />
+                        <path d="M11 25L17 21L23 24L30 14" stroke="url(#navLogoGrad)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="11" cy="25" r="2" fill="#fff" stroke="#2563eb" strokeWidth="1.5" />
+                        <circle cx="17" cy="21" r="2" fill="#fff" stroke="#2563eb" strokeWidth="1.5" />
+                        <circle cx="23" cy="24" r="2" fill="#fff" stroke="#2563eb" strokeWidth="1.5" />
+                        <circle cx="30" cy="14" r="2" fill="#fff" stroke="#2563eb" strokeWidth="1.5" />
+                    </svg>
+                    <span>Grow<span style={{ color: '#2563eb' }}>Graph</span></span>
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="desktop-menu" style={{
-                    display: 'flex',
-                    gap: '2rem',
-                    listStyle: 'none',
-                    margin: 0,
-                    padding: 0,
-                    alignItems: 'center'
-                }}>
-                    {/* 소개 */}
-                    <li style={{ position: 'relative' }}>
-                        <button onClick={() => toggleDropdown('intro')} style={{
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '1rem',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            color: '#334155'
-                        }}>
-                            소개 ▼
-                        </button>
-                        {openDropdown === 'intro' && (
-                            <ul style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                backgroundColor: 'white',
-                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                                borderRadius: '0.5rem',
-                                padding: '0.5rem 0',
-                                minWidth: '200px',
-                                listStyle: 'none',
-                                margin: '0.5rem 0 0 0',
-                                zIndex: 100
-                            }}>
-                                <li><Link to="/intro/story" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>그로우그래프 스토리</Link></li>
-                                <li><Link to="/intro/philosophy" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>기업이념</Link></li>
-                                <li><Link to="/intro/space" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>그로우그래프 공간</Link></li>
-                            </ul>
-                        )}
-                    </li>
+                <div className={`navbar-menu-wrapper${mobileOpen ? ' active' : ''}`}>
+                    <ul className="navbar-menu">
+                        {menus.map((menu) => (
+                            <li key={menu.key} className={`nav-item${isActive(`/${menu.key}`) ? ' active' : ''}`}>
+                                <button
+                                    className={`nav-link${isActive(`/${menu.key}`) ? ' active' : ''}`}
+                                    onClick={() => toggleDropdown(menu.key)}
+                                >
+                                    {menu.label}
+                                    <svg className={`chevron-icon${openDropdown === menu.key ? ' rotate-180' : ''}`} width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                        <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </button>
+                                <ul className={`dropdown-menu${openDropdown === menu.key ? ' active' : ''}`}>
+                                    {menu.items.map((item) => (
+                                        <li key={item.to} className={isExact(item.to) ? 'active' : ''}>
+                                            <Link to={item.to}>{item.label}</Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </li>
+                        ))}
 
-                    {/* 프로그램 */}
-                    <li style={{ position: 'relative' }}>
-                        <button onClick={() => toggleDropdown('program')} style={{
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '1rem',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            color: '#334155'
-                        }}>
-                            프로그램 ▼
-                        </button>
-                        {openDropdown === 'program' && (
-                            <ul style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                backgroundColor: 'white',
-                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                                borderRadius: '0.5rem',
-                                padding: '0.5rem 0',
-                                minWidth: '200px',
-                                listStyle: 'none',
-                                margin: '0.5rem 0 0 0',
-                                zIndex: 100
-                            }}>
-                                <li><Link to="/program/info" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>프로그램 안내</Link></li>
-                                <li><Link to="/program/apply" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>온라인 신청</Link></li>
-                            </ul>
-                        )}
-                    </li>
+                        {/* 제휴문의 */}
+                        <li className={`nav-item${isExact('/contact') ? ' active' : ''}`}>
+                            <Link to="/contact" className={`nav-link${isExact('/contact') ? ' active' : ''}`}>제휴문의</Link>
+                        </li>
 
-                    {/* 기업용 */}
-                    <li style={{ position: 'relative' }}>
-                        <button onClick={() => toggleDropdown('b2b')} style={{
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '1rem',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            color: '#334155'
-                        }}>
-                            기업용 ▼
-                        </button>
-                        {openDropdown === 'b2b' && (
-                            <ul style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                backgroundColor: 'white',
-                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                                borderRadius: '0.5rem',
-                                padding: '0.5rem 0',
-                                minWidth: '200px',
-                                listStyle: 'none',
-                                margin: '0.5rem 0 0 0',
-                                zIndex: 100
-                            }}>
-                                <li><Link to="/b2b/corporate" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>기업 코칭</Link></li>
-                                <li><Link to="/b2b/campus" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>교육기관</Link></li>
-                                <li><Link to="/b2b/seminar" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>강연 및 세미나</Link></li>
-                            </ul>
-                        )}
-                    </li>
+                        {/* Mobile only: admin + login */}
+                        <li className="mobile-only">
+                            {user && (
+                                <Link to="/admin" className="login-btn" style={{ marginBottom: '0.75rem', display: 'block' }}>관리자</Link>
+                            )}
+                            {user ? (
+                                <button onClick={handleLogout} className="login-btn" style={{ width: '100%' }}>로그아웃</button>
+                            ) : (
+                                <Link to="/login" className="login-btn">로그인</Link>
+                            )}
+                        </li>
+                    </ul>
+                </div>
 
-                    {/* 커뮤니티 */}
-                    <li style={{ position: 'relative' }}>
-                        <button onClick={() => toggleDropdown('community')} style={{
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '1rem',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            color: '#334155'
-                        }}>
-                            커뮤니티 ▼
-                        </button>
-                        {openDropdown === 'community' && (
-                            <ul style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0,
-                                backgroundColor: 'white',
-                                boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                                borderRadius: '0.5rem',
-                                padding: '0.5rem 0',
-                                minWidth: '200px',
-                                listStyle: 'none',
-                                margin: '0.5rem 0 0 0',
-                                zIndex: 100
-                            }}>
-                                <li><Link to="/community/notice" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>공지사항</Link></li>
-                                <li><Link to="/community/faq" onClick={closeMenu} style={{ display: 'block', padding: '0.75rem 1.25rem', color: '#334155', textDecoration: 'none' }}>자주하는 질문</Link></li>
-                            </ul>
-                        )}
-                    </li>
+                {/* Desktop Right */}
+                <div className="navbar-right-desktop">
+                    {user && (
+                        <Link to="/admin" className="admin-btn">관리자</Link>
+                    )}
+                    {user ? (
+                        <button onClick={handleLogout} className="login-btn">로그아웃</button>
+                    ) : (
+                        <Link to="/login" className="login-btn">로그인</Link>
+                    )}
+                </div>
 
-                    <li><Link to="/auth/login" onClick={closeMenu} style={{ padding: '0.5rem 1.5rem', backgroundColor: '#2563eb', color: 'white', borderRadius: '0.5rem', textDecoration: 'none', fontWeight: 600 }}>로그인</Link></li>
-                </ul>
-
-                {/* Mobile Hamburger */}
-                <button
-                    className="mobile-hamburger"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                    style={{
-                        display: 'none',
-                        background: 'none',
-                        border: 'none',
-                        fontSize: '1.5rem',
-                        cursor: 'pointer'
-                    }}
-                >
-                    ☰
+                {/* Hamburger */}
+                <button className={`hamburger${mobileOpen ? ' active' : ''}`} onClick={() => setMobileOpen(!mobileOpen)} aria-label="메뉴">
+                    <span className="bar"></span>
+                    <span className="bar"></span>
+                    <span className="bar"></span>
                 </button>
             </div>
-
-            {/* Mobile Menu */}
-            {mobileMenuOpen && (
-                <div className="mobile-menu" style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    backgroundColor: 'white',
-                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                    padding: '1rem'
-                }}>
-                    {/* Mobile menu items here */}
-                </div>
-            )}
-
-            <style>{`
-        @media (max-width: 768px) {
-          .desktop-menu {
-            display: none !important;
-          }
-          .mobile-hamburger {
-            display: block !important;
-          }
-        }
-      `}</style>
         </nav>
     );
 };
