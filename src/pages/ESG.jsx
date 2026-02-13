@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { supabase } from '../lib/supabase';
 
 /* ───── Calendar + Time Multi-Select Component ───── */
 function CalendarPicker({ selectedSlots, setSelectedSlots }) {
@@ -163,12 +164,30 @@ function ApplicationModal({ isOpen, onClose }) {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const datesSummary = Object.entries(selectedSlots)
+        const schedule = Object.entries(selectedSlots)
             .map(([d, times]) => `${d} ${times.join(', ')}`)
-            .join('\n');
-        alert(`성공적으로 접수되었습니다.\n\n[접수 내용]\n- 성함: ${form.name}\n- 프로그램: ${form.program}\n- 희망 일정:\n${datesSummary}\n- 결제 금액: ${finalPrice.toLocaleString()}원\n\n담당 코치가 24시간 이내에 연락드리겠습니다.`);
+            .join(' / ');
+
+        const { error } = await supabase.from('applications').insert({
+            name: form.name,
+            age: form.age ? parseInt(form.age) : null,
+            gender: form.gender,
+            phone: form.phone,
+            location: form.location,
+            program: form.program,
+            schedule,
+            referral_code: form.referralCode || null,
+            final_price: finalPrice,
+        });
+
+        if (error) {
+            alert('접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
+            return;
+        }
+
+        alert(`성공적으로 접수되었습니다.\n\n[접수 내용]\n- 성함: ${form.name}\n- 프로그램: ${form.program}\n- 희망 일정:\n${schedule}\n- 결제 금액: ${finalPrice.toLocaleString()}원\n\n담당 코치가 24시간 이내에 연락드리겠습니다.`);
         setForm({ name: '', age: '', gender: '', phone: '', location: '', program: '', referralCode: '' });
         setSelectedSlots({});
         setReferralApplied(false);

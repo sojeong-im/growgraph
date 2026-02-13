@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 const Contact = () => {
-    const handleSubmit = (e) => {
+    const [submitting, setSubmitting] = useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmitting(true);
+
+        const formData = new FormData(e.target);
+        const { error } = await supabase.from('inquiries').insert({
+            contact_name: formData.get('name'),
+            company: formData.get('organization'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            type: formData.get('inquiryType'),
+            message: formData.get('message'),
+        });
+
+        setSubmitting(false);
+
+        if (error) {
+            alert('문의 접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
+            return;
+        }
+
         alert('문의가 성공적으로 접수되었습니다.\n담당자가 확인 후 24시간 이내에 연락드리겠습니다.');
         e.target.reset();
     };
@@ -76,14 +98,15 @@ const Contact = () => {
                             </label>
                         </div>
 
-                        <button type="submit" style={{
+                        <button type="submit" disabled={submitting} style={{
                             width: '100%', padding: '1rem', backgroundColor: '#0f172a', color: 'white',
                             fontWeight: 700, fontSize: '1.125rem', borderRadius: '0.75rem', border: 'none',
-                            cursor: 'pointer', transition: 'background-color 0.2s'
+                            cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.7 : 1,
+                            transition: 'background-color 0.2s'
                         }}
-                            onMouseOver={(e) => e.target.style.backgroundColor = '#1e293b'}
-                            onMouseOut={(e) => e.target.style.backgroundColor = '#0f172a'}
-                        >문의하기</button>
+                            onMouseOver={(e) => { if (!submitting) e.target.style.backgroundColor = '#1e293b'; }}
+                            onMouseOut={(e) => { e.target.style.backgroundColor = '#0f172a'; }}
+                        >{submitting ? '접수 중...' : '문의하기'}</button>
                     </form>
                 </div>
             </div>
