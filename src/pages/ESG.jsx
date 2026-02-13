@@ -169,6 +169,9 @@ function ApplicationModal({ isOpen, onClose }) {
             .map(([d, times]) => `${d} ${times.join(', ')}`)
             .join('\n');
         alert(`성공적으로 접수되었습니다.\n\n[접수 내용]\n- 성함: ${form.name}\n- 프로그램: ${form.program}\n- 희망 일정:\n${datesSummary}\n- 결제 금액: ${finalPrice.toLocaleString()}원\n\n담당 코치가 24시간 이내에 연락드리겠습니다.`);
+        setForm({ name: '', age: '', gender: '', phone: '', location: '', program: '', referralCode: '' });
+        setSelectedSlots({});
+        setReferralApplied(false);
         onClose();
     };
 
