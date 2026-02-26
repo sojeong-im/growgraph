@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 
 const Space = () => {
     const branches = [
@@ -9,6 +10,8 @@ const Space = () => {
 
     return (
         <div style={{ backgroundColor: '#fff', minHeight: '100vh', paddingBottom: '5rem' }}>
+            <SEO title="공간 소개 | GrowGraph" description="성장을 시각화하고 온전히 자신에게 집중할 수 있는 그로우그래프의 코칭 스페이스." />
+
             {/* Header */}
             <section style={{ padding: '6rem 1rem', backgroundColor: '#f8fafc', textAlign: 'center' }}>
                 <div style={{ maxWidth: '56rem', margin: '0 auto' }}>

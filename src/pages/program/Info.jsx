@@ -1,8 +1,11 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 
 const ProgramInfo = () => {
     return (
         <div className="bg-slate-50 min-h-screen py-24">
+            <SEO title="프로그램 안내 | GrowGraph" description="자가진단부터 1:1 심층 코칭까지. 그로우그래프의 체계화된 성장 프로그램을 만나보세요." />
+
             <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-24">
                     <span className="inline-block bg-blue-50 text-blue-600 font-bold text-sm px-5 py-2.5 rounded-full mb-6 tracking-wide">

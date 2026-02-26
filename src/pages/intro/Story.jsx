@@ -1,9 +1,12 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 import { Link } from 'react-router-dom';
 
 const Story = () => {
     return (
         <div className="story-page">
+            <SEO title="브랜드 스토리 | GrowGraph" description="우리는 왜 데이터 기반의 성장 로드맵을 이야기할까요? 그로우그래프의 시작과 비전." />
+
             {/* Hero */}
             <section className="story-hero">
                 <div className="container-limit text-center">

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import SEO from '../../components/SEO';
 import { Link } from 'react-router-dom';
 
 const Seminar = () => {
@@ -28,6 +29,8 @@ const Seminar = () => {
 
     return (
         <div>
+            <SEO title="워크숍 & 세미나 | GrowGraph" description="실행을 변화로 이끄는 그로우그래프의 특화 워크숍과 세미나" />
+
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#0f172a' }}>
                 <div className="seminar-spotlight"></div>

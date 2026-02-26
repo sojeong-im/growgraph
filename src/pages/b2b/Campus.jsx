@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 import { Link } from 'react-router-dom';
 
 const Campus = () => {
@@ -23,6 +24,8 @@ const Campus = () => {
 
     return (
         <div>
+            <SEO title="캠퍼스 프로그램 | GrowGraph" description="대학생과 취업준비생을 위한 커리어 로드맵 설계 및 진로 방향성 탐색 프로그램" />
+
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'linear-gradient(135deg, #1e40af, #0f172a)' }}>
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>

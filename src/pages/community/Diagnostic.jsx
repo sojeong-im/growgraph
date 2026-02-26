@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '../../components/SEO';
 import { diagnosticData } from '../../data/diagnostics';
 
 const Diagnostic = () => {
@@ -44,6 +45,8 @@ const Diagnostic = () => {
 
     return (
         <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', padding: '6rem 1rem' }}>
+            <SEO title="자가 진단 | GrowGraph" description="우울·불안·스트레스·번아웃. 4가지 심리 척도를 통해 현재의 내면 상태를 점검합니다." />
+
             <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                     <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>마음 건강 자가진단</h1>

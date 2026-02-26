@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '../components/SEO';
 import { supabase } from '../lib/supabase';
 
 const Contact = () => {
@@ -40,6 +41,8 @@ const Contact = () => {
 
     return (
         <div style={{ paddingTop: '5rem', paddingBottom: '5rem', backgroundColor: '#f8fafc' }}>
+            <SEO title="제휴 문의 | GrowGraph" description="강연, 워크숍, 기업 제휴 등 그로우그래프와의 협업을 제안해 주세요." />
+
             <div style={{ maxWidth: '48rem', margin: '0 auto', padding: '0 1rem' }}>
                 <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
                     <p style={{ color: '#2563eb', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.875rem', marginBottom: '1rem' }}>Partnership & Inquiry</p>

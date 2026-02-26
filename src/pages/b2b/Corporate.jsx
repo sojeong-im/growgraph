@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 import { Link } from 'react-router-dom';
 
 const Corporate = () => {
@@ -22,6 +23,8 @@ const Corporate = () => {
 
     return (
         <div>
+            <SEO title="기업 코칭 | GrowGraph" description="조직의 성장을 위한 데이터 기반 맞춤형 코칭 모델을 제공합니다." />
+
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', backgroundColor: '#0f172a' }}>
                 <div style={{ position: 'absolute', inset: 0 }}>

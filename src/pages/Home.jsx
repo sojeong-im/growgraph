@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const reviews = [
     { name: '김서연', type: '직장인', avatar: '👩‍💼', text: '막연했던 커리어 고민이 데이터로 정리되니까 방향이 보이기 시작했어요. 코칭도 정말 실질적이었습니다.' },
@@ -58,6 +59,7 @@ const Home = () => {
 
     return (
         <div className="home-page">
+            <SEO />
             {/* ===== Hero Section ===== */}
             <section className="hero">
                 <div className="container hero-content">
@@ -107,7 +109,7 @@ const Home = () => {
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                             />
-                            {[[40,250,0.8],[120,220,1.2],[200,200,1.6],[280,160,2.0],[360,120,2.4]].map(([cx,cy,delay], i) => (
+                            {[[40, 250, 0.8], [120, 220, 1.2], [200, 200, 1.6], [280, 160, 2.0], [360, 120, 2.4]].map(([cx, cy, delay], i) => (
                                 <circle
                                     key={i}
                                     className="graph-point"

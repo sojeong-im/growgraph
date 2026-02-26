@@ -1,9 +1,12 @@
 import React from 'react';
+import SEO from '../../components/SEO';
 import { Link } from 'react-router-dom';
 
 const Philosophy = () => {
     return (
         <div className="philosophy-page">
+            <SEO title="교육 철학 | GrowGraph" description="맹목적인 경쟁이 아닌, 나의 좌표를 확인하는 것에서 성장은 시작됩니다." />
+
             {/* Hero */}
             <section className="philo-hero">
                 <div className="container-limit text-center">
