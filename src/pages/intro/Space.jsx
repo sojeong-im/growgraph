@@ -27,7 +27,7 @@ const Space = () => {
                     {branches.map((b, i) => (
                         <div key={i} className="space-card" style={{ border: '1px solid #f1f5f9', borderRadius: '2rem', padding: 0, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', transition: 'all 0.3s', background: '#fff', overflow: 'hidden' }}>
                             <div style={{ height: '15rem', width: '100%', overflow: 'hidden' }}>
-                                <img src={b.img} alt={b.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }} />
+                                <img loading="lazy" src={b.img} alt={b.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }} />
                             </div>
                             <div style={{ padding: '2rem' }}>
                                 <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2563eb', backgroundColor: '#eff6ff', padding: '0.25rem 0.75rem', borderRadius: '9999px', marginBottom: '1.5rem', display: 'inline-block' }}>{b.tag}</span>

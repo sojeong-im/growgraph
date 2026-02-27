@@ -28,7 +28,7 @@ const Corporate = () => {
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', backgroundColor: '#0f172a' }}>
                 <div style={{ position: 'absolute', inset: 0 }}>
-                    <img src="/assets/corporate_hero.png" alt="Corporate Growth" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} />
+                    <img loading="lazy" src="/assets/corporate_hero.png" alt="Corporate Growth" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4 }} />
                     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(15,23,42,0.8), rgba(15,23,42,0.6), #0f172a)' }}></div>
                 </div>
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '64rem', margin: '0 auto', textAlign: 'center', padding: '0 1rem' }}>

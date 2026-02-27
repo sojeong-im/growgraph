@@ -29,7 +29,7 @@ const Campus = () => {
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'linear-gradient(135deg, #1e40af, #0f172a)' }}>
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.3 }}>
-                    <img src="/assets/campus_education.png" alt="Education" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img loading="lazy" src="/assets/campus_education.png" alt="Education" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '48rem', margin: '0 auto', textAlign: 'center', padding: '2rem 1rem' }}>
                     <div style={{ display: 'inline-block', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', padding: '0.5rem 1.5rem', borderRadius: '9999px', marginBottom: '1.5rem' }}>

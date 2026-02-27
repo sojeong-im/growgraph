@@ -26,7 +26,7 @@ const Philosophy = () => {
                             <p className="philo-text">그로우그래프는 막연한 기대를 실질적인 가능성으로 <span style={{ color: '#0f172a', fontWeight: 600 }}>'가시화(Visualize)'</span>하는 순간을 함께합니다. 자신의 현재를 데이터로 직면할 때, 우리는 비로소 다음 단계를 향한 정교한 설계를 시작할 수 있습니다. 당신의 잠재력이 그래프 위에서 현실이 되도록 가장 과학적인 로드맵을 제시합니다.</p>
                         </div>
                         <div style={{ backgroundColor: '#f8fafc', borderRadius: '1.5rem', padding: '2rem', textAlign: 'center', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <img src="/assets/philosophy_diagram.png" alt="Core Value Visualization: 깊이, 연결, 지속, 공헌" style={{ maxWidth: '100%', height: 'auto', borderRadius: '1rem' }} />
+                            <img loading="lazy" src="/assets/philosophy_diagram.png" alt="Core Value Visualization: 깊이, 연결, 지속, 공헌" style={{ maxWidth: '100%', height: 'auto', borderRadius: '1rem' }} />
                         </div>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ const Seminar = () => {
             <section style={{ position: 'relative', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#0f172a' }}>
                 <div className="seminar-spotlight"></div>
                 <div style={{ position: 'absolute', inset: 0, opacity: 0.5 }}>
-                    <img src="/assets/seminar_hero.png" alt="Seminar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img loading="lazy" src="/assets/seminar_hero.png" alt="Seminar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(15,23,42,0.7), rgba(15,23,42,0.9))' }}></div>
                 <div style={{ position: 'relative', zIndex: 10, maxWidth: '48rem', margin: '0 auto', textAlign: 'center', padding: '2rem 1rem', color: '#fff' }}>
