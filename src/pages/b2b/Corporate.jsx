@@ -23,7 +23,7 @@ const Corporate = () => {
 
     return (
         <div>
-            <SEO title="기업 코칭 | GrowGraph" description="조직의 성장을 위한 데이터 기반 맞춤형 코칭 모델을 제공합니다." />
+            <SEO title="기업 코칭 | GrowGraph" description="조직의 성장을 위한 데이터 기반 맞춤형 코칭 모델을 제공합니다." url="https://growgraph.site/b2b/corporate" />
 
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', backgroundColor: '#0f172a' }}>
@@ -115,9 +115,4 @@ const Corporate = () => {
                         제휴 신청하기 <span style={{ fontSize: '1.25rem' }}>↗</span>
                     </Link>
                 </div>
-            </section>
-        </div>
-    );
-};
-
-export default Corporate;
+            </sec

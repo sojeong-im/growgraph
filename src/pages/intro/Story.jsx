@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Story = () => {
     return (
         <div className="story-page">
-            <SEO title="브랜드 스토리 | GrowGraph" description="우리는 왜 데이터 기반의 성장 로드맵을 이야기할까요? 그로우그래프의 시작과 비전." />
+            <SEO title="브랜드 스토리 | GrowGraph" description="우리는 왜 데이터 기반의 성장 로드맵을 이야기할까요? 그로우그래프의 시작과 비전." url="https://growgraph.site/intro/story" />
 
             {/* Hero */}
             <section className="story-hero">
@@ -68,8 +68,4 @@ const Story = () => {
                     <Link to="/community/diagnostic" className="cta-button">현재의 좌표 확인하기 →</Link>
                 </div>
             </section>
-        </div>
-    );
-};
-
-export default Story;
+       

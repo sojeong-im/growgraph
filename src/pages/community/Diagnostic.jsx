@@ -45,7 +45,7 @@ const Diagnostic = () => {
 
     return (
         <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', padding: '6rem 1rem' }}>
-            <SEO title="자가 진단 | GrowGraph" description="우울·불안·스트레스·번아웃. 4가지 심리 척도를 통해 현재의 내면 상태를 점검합니다." />
+            <SEO title="자가 진단 | GrowGraph" description="우울·불안·스트레스·번아웃. 4가지 심리 척도를 통해 현재의 내면 상태를 점검합니다." url="https://growgraph.site/community/diagnostic" />
 
             <div style={{ maxWidth: '64rem', margin: '0 auto' }}>
                 <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
@@ -112,8 +112,4 @@ const Diagnostic = () => {
                     </div>
                 </div>
             )}
-        </div>
-    );
-};
-
-export default Diagnostic;
+   

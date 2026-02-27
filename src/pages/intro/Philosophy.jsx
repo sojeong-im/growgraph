@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Philosophy = () => {
     return (
         <div className="philosophy-page">
-            <SEO title="교육 철학 | GrowGraph" description="맹목적인 경쟁이 아닌, 나의 좌표를 확인하는 것에서 성장은 시작됩니다." />
+            <SEO title="교육 철학 | GrowGraph" description="맹목적인 경쟁이 아닌, 나의 좌표를 확인하는 것에서 성장은 시작됩니다." url="https://growgraph.site/intro/philosophy" />
 
             {/* Hero */}
             <section className="philo-hero">
@@ -108,9 +108,4 @@ const Philosophy = () => {
                         <div style={{ position: 'absolute', top: 0, right: 0, width: '16rem', height: '16rem', backgroundColor: '#2563eb', borderRadius: '50%', filter: 'blur(100px)', opacity: 0.2, transform: 'translate(50%, -50%)' }}></div>
                     </div>
                 </div>
-            </section>
-        </div>
-    );
-};
-
-export default Philosophy;
+            </s

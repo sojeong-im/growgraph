@@ -59,7 +59,22 @@ const Home = () => {
 
     return (
         <div className="home-page">
-            <SEO />
+            <SEO schema={{
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "GrowGraph",
+                "alternateName": "그로우그래프",
+                "url": "https://growgraph.site",
+                "logo": "https://growgraph.site/assets/logo.png",
+                "description": "데이터 기반의 성장 로드맵 설계 전문 기관",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "여의대로 108 파크원타워1",
+                    "addressLocality": "영등포구",
+                    "addressRegion": "서울특별시",
+                    "addressCountry": "KR"
+                }
+            }} />
             {/* ===== Hero Section ===== */}
             <section className="hero">
                 <div className="container hero-content">

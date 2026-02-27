@@ -10,7 +10,7 @@ const Space = () => {
 
     return (
         <div style={{ backgroundColor: '#fff', minHeight: '100vh', paddingBottom: '5rem' }}>
-            <SEO title="공간 소개 | GrowGraph" description="성장을 시각화하고 온전히 자신에게 집중할 수 있는 그로우그래프의 코칭 스페이스." />
+            <SEO title="공간 소개 | GrowGraph" description="성장을 시각화하고 온전히 자신에게 집중할 수 있는 그로우그래프의 코칭 스페이스." url="https://growgraph.site/intro/space" />
 
             {/* Header */}
             <section style={{ padding: '6rem 1rem', backgroundColor: '#f8fafc', textAlign: 'center' }}>
@@ -72,9 +72,4 @@ const Space = () => {
                         <div style={{ position: 'absolute', bottom: '-5rem', right: '-5rem', width: '16rem', height: '16rem', backgroundColor: '#2563eb', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.3 }}></div>
                     </div>
                 </div>
-            </section>
-        </div>
-    );
-};
-
-export default Space;
+            </s

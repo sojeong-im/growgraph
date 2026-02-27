@@ -41,7 +41,7 @@ const Contact = () => {
 
     return (
         <div style={{ paddingTop: '5rem', paddingBottom: '5rem', backgroundColor: '#f8fafc' }}>
-            <SEO title="제휴 문의 | GrowGraph" description="강연, 워크숍, 기업 제휴 등 그로우그래프와의 협업을 제안해 주세요." />
+            <SEO title="제휴 문의 | GrowGraph" description="강연, 워크숍, 기업 제휴 등 그로우그래프와의 협업을 제안해 주세요." url="https://growgraph.site/contact" />
 
             <div style={{ maxWidth: '48rem', margin: '0 auto', padding: '0 1rem' }}>
                 <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -113,8 +113,4 @@ const Contact = () => {
                     </form>
                 </div>
             </div>
-        </div>
-    );
-};
-
-export default Contact;
+        </div

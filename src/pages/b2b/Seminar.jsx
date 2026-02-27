@@ -29,7 +29,7 @@ const Seminar = () => {
 
     return (
         <div>
-            <SEO title="워크숍 & 세미나 | GrowGraph" description="실행을 변화로 이끄는 그로우그래프의 특화 워크숍과 세미나" />
+            <SEO title="워크숍 & 세미나 | GrowGraph" description="실행을 변화로 이끄는 그로우그래프의 특화 워크숍과 세미나" url="https://growgraph.site/b2b/seminar" />
 
             {/* Hero */}
             <section style={{ position: 'relative', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: '#0f172a' }}>
@@ -136,9 +136,4 @@ const Seminar = () => {
                     <p style={{ color: '#64748b', marginBottom: '2.5rem', wordBreak: 'keep-all' }}>맞춤형 콘텐츠와 연사 큐레이션으로 기억에 남는 성장의 순간을 설계해 드립니다.</p>
                     <Link to="/contact" style={{ display: 'inline-block', background: '#0f172a', color: '#fff', fontWeight: 700, padding: '1.25rem 2.5rem', borderRadius: '1rem', fontSize: '1.125rem', textDecoration: 'none' }}>강연 문의하기 ↗</Link>
                 </div>
-            </section>
-        </div>
-    );
-};
-
-export default Seminar;
+            </sec
